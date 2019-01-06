@@ -96,3 +96,31 @@ def relu(x):
 x = np.linspace(-10, 10, 100)
 plt.plot(x, relu(x))
 plt.title('relu');
+
+#%% [markdown]
+# ## SeLU (Scaled Exponential Linear Unit)
+# recently developed
+
+#%%
+def selu(x):
+    alpha = 1.6732632423543772848170429916717
+    scale = 1.0507009873554804934193349852946
+    res = scale * np.where(x>0.0,
+                           x,
+                           alpha * (np.exp(x) - 1))
+    return res
+
+
+#%%
+x = np.linspace(-10, 10, 100)
+plt.plot(x, relu(x))
+plt.plot(x, selu(x))
+plt.legend(['relu', 'selu'])
+plt.title('ReLU and SeLU');
+
+#%% [markdown]
+# When creating a deep network, we will use one of these activation functions _between_ one layer and the next, in order to make the Neural Network nonlinear. These functions are the secret power of Neural Networks: with nonlinearities at each layer they are able to approximate very complex functions.
+#%% [markdown]
+# ## Binary classification
+#%% [markdown]
+# Let's work through classifying a binary dataset using a Neural Network. We'll need a dataset to work with to train our Neural Network. Let's create an example dataset with two classes that are not separable with a straight boundary, and let's separate them with a fully connected Neural Network. First we import the `make_moons` function from Scikit Learn:
