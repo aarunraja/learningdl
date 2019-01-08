@@ -117,7 +117,7 @@ def plot_decision_boundary(model, X, y):
     
 plot_decision_boundary(model, X, y)
 
-plt.title("Decision Boundary for Logistic Regression");
+plt.title("Decision Boundary for Logistic Regression")
 
 #%% [markdown]
 # As you can see in the figure, since a shallow model like logistic regression is not able to draw curved boundaries, the best it can do is align the boundary so that most of the blue dots fall in the blue region and most of the red crosses fall in the red region.
