@@ -1,10 +1,14 @@
 #%% [markdown]
 # # Multiclass classification
 #
-# More than two labels.  For example, image is cat, dog, dove
-# Selection of activation for multiclass classification requires attention due to mutually exclusive classes, independent classes
+# More than two labels.  For example, image is cat, dog, dove.
+# Selection of activation for multiclass classification requires attention due to the two different types of classes:
+# * mutually exclusive classes
+# * independent classes
+#
 # E.g. organizing blog posts using tags (independent)
-# Categorize movies into genre horror, action, thriller
+#
+# Categorize movies into genre horror, action, thriller (mutually exclusive)
 #
 # Use softmax function when dealing mutually exclusive classes
 
@@ -96,6 +100,9 @@ model.fit(X_train, y_train,
 y_pred = model.predict(X_test)
 y_pred[:5]
 
+#%%
+y_test[:5]
+
 #%% [markdown]
 # Which class does our network think each flower is? We can obtain the predicted class with the `np.argmax`, which finds the index of the maximum value in an array:
 
@@ -143,3 +150,51 @@ g.fig.suptitle("The Iris Dataset")
 #%% [markdown]
 # Homework - Deep Network
 # Based on this let us perform optimization
+
+#%%
+model = Sequential()
+model.add(Dense(6, input_dim=4, activation='tanh'))
+model.add(Dense(3, activation='tanh'))
+model.add(Dense(3, activation='softmax'))
+model.compile(Adam(lr=0.1),
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+#%% [markdown]
+# ## 3. Fit the model
+#%%
+model.fit(X_train, y_train,
+          validation_split=0.1,
+          epochs=200)
+
+#%% [markdown]
+# ## 4. Evaluate the model
+#%%
+y_pred = model.predict(X_test)
+y_pred[:5]
+
+#%%
+y_test[:5]
+
+#%% [markdown]
+# Which class does our network think each flower is? We can obtain the predicted class with the `np.argmax`, which finds the index of the maximum value in an array:
+
+#%%
+y_test_class = np.argmax(y_test, axis=1)
+y_pred_class = np.argmax(y_pred, axis=1)
+
+#%%
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+
+#%%
+print(classification_report(y_test_class, y_pred_class))
+
+#%%
+cm = confusion_matrix(y_test_class, y_pred_class)
+
+pd.DataFrame(cm, index = class_le.classes_,
+             columns = ['pred_'+c for c in class_le.classes_])
+
+#%%
+plt.imshow(cm, cmap='Blues')
