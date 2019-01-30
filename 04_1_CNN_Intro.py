@@ -1,6 +1,6 @@
 #%% [markdown]
-# # CNN - Introduction
-# Image is pixel that represented in grid of bindary value
+# # CNN - Why does this require over ANN?
+# Image is pixel that represented in grid of binary value
 
 #%%
 with open('common.py') as fin:
@@ -117,7 +117,7 @@ print(y_train_cat.shape)
 print(y_test_cat.shape)
 
 #%% [markdown]
-# # Building the CNN
+# # Building the ANN
 # Input: 784 features
 # Layer 1: 512 nodes with Relu activation
 # Layer 2: 256 nodes with Relu
@@ -176,14 +176,3 @@ y_pred = np.argmax(y_pred_cat, axis=-1)
 #%%
 print(y_pred[:5])
 print(y_test[:5])
-
-#%% [markdown]
-# Train is better than test, means overfitting
-# In this context, we need to provide better features from the images
-# Any better way to extract features from images
-# This process is called as feature extraction.
-#
-# ## Feature Extraction
-# * Fourier transforms
-# * Wavelet transforms
-# * Histograms of oriented gradients (HOG)
