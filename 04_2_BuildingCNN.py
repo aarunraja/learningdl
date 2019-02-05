@@ -52,6 +52,9 @@ img = np.random.randint(255, size=(4,4,3), dtype='uint8')
 img
 
 #%%
+img.shape
+
+#%%
 plt.figure(figsize=(5,5))
 plt.subplot(221)
 plt.imshow(img)
