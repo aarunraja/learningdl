@@ -1,5 +1,6 @@
 #%% [markdown]
-# LSTM for Regression Using the Window Method
+# # LSTM for Regression with Time Steps
+# time step may have different per sample.  Let us reshape.
 #%%
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -52,10 +53,13 @@ test_X, test_y = create_dataset(test, look_back)
 # ## Reshaping
 # LSTM expects input to be in 3-order tuple [samples, time steps, features]
 
+#%% [markdown]
+# Set the columns to be the time steps dimensions
+# change the features dimension back to 1
 #%%
 # reshape input to [samples, time steps, features]
-train_X = np.reshape(train_X, (train_X.shape[0], 1, train_X.shape[1]))
-test_X = np.reshape(test_X, (test_X.shape[0], 1, test_X.shape[1]))
+train_X = np.reshape(train_X, (train_X.shape[0], train_X.shape[1], 1))
+test_X = np.reshape(test_X, (test_X.shape[0], test_X.shape[1], 1))
 
 #%% [markdown]
 # ## Building the LSTM model
@@ -72,7 +76,7 @@ from keras.layers import LSTM
 # * 1 output layer
 #%%
 model = Sequential()
-model.add(LSTM(4, input_shape=(1, look_back)))
+model.add(LSTM(4, input_shape=(look_back, 1))) # note that input_shape changed
 model.add(Dense(1))
 model.compile(loss='mean_squared_error', optimizer='adam')
 model.summary()
@@ -120,4 +124,4 @@ plt.figure(figsize=(300, 200))
 plt.show()
 
 #%% [markdown]
-# Error was increased slightly compared to previous.  The window size and the network architecture were not tuned.
+# Slightly better than previous example, and the structure of the input data makes a lot more sense
