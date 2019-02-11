@@ -1,10 +1,30 @@
 #%% [markdown]
 # # LSTM for Regression Using the Window Method
+#
+#X1   X2  X3  Y 
+#112 118 132 129
+#118 132 129 121 
+#132 129 121 135 
+#129 121 135 148 
+#121 135 148 148
+#
+# look_back = 3
+# input_shape=(1, look_back)
 #%%
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+
+#%%
+def create_dataset(dataset, look_back = 1):
+    data_X, data_y = [], []
+
+    for i in range(len(dataset) - look_back -1):
+        a = dataset[i:(i+look_back), 0]
+        data_X.append(a)
+        data_y.append(dataset[i + look_back, 0])
+    return np.array(data_X), np.array(data_y)
 
 #%%
 np.random.seed(7)
@@ -33,16 +53,6 @@ test_size = len(ds) - train_size
 train, test = ds[0:train_size,:], ds[train_size:len(ds),:]
 # reshape into X=t and y=t+1
 look_back = 3
-
-#%%
-def create_dataset(dataset, look_back = 1):
-    data_X, data_y = [], []
-
-    for i in range(len(dataset) - look_back -1):
-        a = dataset[i:(i+look_back), 0]
-        data_X.append(a)
-        data_y.append(dataset[i + look_back, 0])
-    return np.array(data_X), np.array(data_y)
 
 #%%
 train_X, train_y = create_dataset(train, look_back)

@@ -6,6 +6,10 @@
 # It requires training data not be shuffled when fitting the network
 #
 # It also requires explicit reseetting of the network state after each exposure to the epoch (model.reset_states())
+# * LSTM stateful = True
+# * batch_input_shape=(batch_size, time_steps, features)
+# * predict(.., batch_size)
+
 #%%
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -93,14 +97,17 @@ model.summary()
 
 #%%
 for i in range(100):
+    print("************* Outer Batch %d **********" % i)
     model.fit(train_X, train_y, epochs=100, batch_size=1, verbose=2)
     model.reset_states()
 
 #%%
 # specify batch_size
 train_predict = model.predict(train_X, batch_size=batch_size)
-test_predict = model.predict(test_X, batch_size=batch_size)
+model.reset_states()
 
+test_predict = model.predict(test_X, batch_size=batch_size)
+model.reset_states()
 #%%
 # invert predictions
 train_predict = scaler.inverse_transform(train_predict)
@@ -137,4 +144,4 @@ plt.figure(figsize=(300, 200))
 plt.show()
 
 #%% [markdown]
-# Better than previous examples, but still improvement required
+# Better than some, worse than others.  Requires more epocs to train.

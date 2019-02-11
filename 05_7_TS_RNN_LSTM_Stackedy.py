@@ -1,11 +1,7 @@
 #%% [markdown]
 # # Stacked LSTM for Regression with Memory between batches
-# LSTM has memory which is capable of remembering across long sequences.
-# Normally, the state within the network is reset after each training batch when fitting, predict or evaluating.
-#
-# It requires training data not be shuffled when fitting the network
-#
-# It also requires explicit reseetting of the network state after each exposure to the epoch (model.reset_states())
+# LSTM networks can be stacked. return_sequences
+
 #%%
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -94,12 +90,14 @@ model.summary()
 
 #%%
 for i in range(100):
-    model.fit(train_X, train_y, epochs=100, batch_size=1, verbose=2)
+    print("************* Outer Batch %d **********" % i)
+    model.fit(train_X, train_y, epochs=10, batch_size=batch_size, verbose=2, shuffle=False)
     model.reset_states()
 
 #%%
 # specify batch_size
 train_predict = model.predict(train_X, batch_size=batch_size)
+model.reset_states()
 test_predict = model.predict(test_X, batch_size=batch_size)
 
 #%%
@@ -138,4 +136,4 @@ plt.figure(figsize=(300, 200))
 plt.show()
 
 #%% [markdown]
-# Better than previous examples, but still improvement required
+# Compare the result.

@@ -1,6 +1,13 @@
 #%% [markdown]
 # # LSTM for Regression with Time Steps
-# time step may have different per sample.  Let us reshape.
+# LSTM includes time steps.  Some sequence problems may have a varied number of time steps per sample.
+#
+# prior time stemps in a timer series as inputs to predict the output at the next time step.
+#
+# Instead of phrasing the past observations as separate input features, we can use them as time steps as one features.
+# reshape(trainX, (trainX.shape[0], trainX.shape[1], 1))
+# previously
+# reshape(train_X, (train_X.shape[0], 1, train_X.shape[1]))
 #%%
 import pandas as pd
 import matplotlib.pyplot as plt
