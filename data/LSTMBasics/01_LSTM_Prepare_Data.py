@@ -1,7 +1,7 @@
 #%% [markdown]
 # # Prepare data for LSTM 
 #
-# ##Lab 1
+# ## Lab 1
 # Normalize Series Data
 
 #%%
@@ -32,7 +32,7 @@ inversed = scaler.inverse_transform(normalized)
 print(inversed)
 
 #%% [markdown]
-# ##Lab 2
+# ## Lab 2
 # Standardize Series Data
 
 #%%
@@ -61,3 +61,55 @@ print(standardized)
 # inverse transform and print
 inversed = scaler.inverse_transform(standardized)
 print(inversed)
+
+#%% [markdown]
+# ## Lab 3
+# Prepadding Sequence Data
+
+#%%
+from keras.preprocessing.sequence import pad_sequences
+#%%
+# define sequences
+sequences = [
+	[1, 2, 3, 4],
+	   [1, 2, 3],
+		     [1]
+	]
+#%%
+# pad sequence
+padded = pad_sequences(sequences)
+print(padded)
+
+#%% [markdown]
+# ## Lab 4
+# Postpadding Sequence Data
+
+#%%
+# define sequences
+sequences = [
+	[1, 2, 3, 4],
+	   [1, 2, 3],
+		     [1]
+	]
+# pad sequence
+padded = pad_sequences(sequences, padding='post')
+print(padded)
+
+#%% [markdown]
+# ## Lab 5
+# Pre and Post truncating Sequence Data
+
+#%%
+# define sequences
+sequences = [
+	[1, 2, 3, 4],
+	   [1, 2, 3],
+		     [1]
+	]
+# pre truncate sequence
+pretrun= pad_sequences(sequences, maxlen=2)
+print(pretrun)
+#%%
+# post truncate sequence
+posttrun= pad_sequences(sequences, maxlen=2, truncating='post')
+print(posttrun)
