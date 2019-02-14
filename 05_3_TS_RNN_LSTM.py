@@ -51,7 +51,7 @@ test_X, test_y = create_dataset(test, look_back)
 
 #%% [markdown]
 # ## Reshaping
-# LSTM expects input to be in 3-order tuple [samples, time steps, features]
+# LSTM expects input to be in 3-order tensor [samples, time steps, features]
 
 #%%
 # reshape input to [samples, time steps, features]
@@ -72,14 +72,15 @@ from keras.layers import LSTM
 # * 1 hidden layer with 4 LSTM blocks
 # * 1 output layer
 #%%
+features_count = train_X.shape[1]
 model = Sequential()
-model.add(LSTM(4, input_shape=(1, look_back)))
+model.add(LSTM(4, input_shape=(features_count, look_back)))
 model.add(Dense(1))
 model.compile(loss='mean_squared_error', optimizer='adam')
 model.summary()
 
 #%%
-model.fit(train_X, train_y, epochs=100, batch_size=1, verbose=2)
+model.fit(train_X, train_y, epochs=100, batch_size=10, verbose=2)
 
 #%%
 train_predict = model.predict(train_X)

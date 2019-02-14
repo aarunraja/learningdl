@@ -88,7 +88,7 @@ model.compile(loss='mean_squared_error', optimizer='adam')
 model.summary()
 
 #%%
-model.fit(train_X, train_y, epochs=100, batch_size=1, verbose=2)
+model.fit(train_X, train_y, epochs=100, batch_size=10, verbose=2)
 
 #%%
 train_predict = model.predict(train_X)
