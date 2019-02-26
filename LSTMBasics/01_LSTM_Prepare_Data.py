@@ -113,3 +113,41 @@ print(pretrun)
 # post truncate sequence
 posttrun= pad_sequences(sequences, maxlen=2, truncating='post')
 print(posttrun)
+
+#%% [markdown]
+# ## Lab 6
+# Sequence as Supervised Data
+#
+# Padans DataFrame.shift()
+#%%
+from pandas import DataFrame
+# define the sequence
+df = DataFrame()
+df['t'] = [x for x in range(10)] 
+df
+
+#%%
+# Shift forward
+# the first row of t-1 to be discarded due to NaN.
+df['t-1'] = df['t'].shift(1) 
+df
+
+#%% [markdown]
+# We can create t, t-1, t-2, etc
+#
+# The shift operator also accepts -ve value
+
+#%%
+df = DataFrame()
+df['t'] = [x for x in range(10)]
+df['t+1'] = df['t'].shift(-1)
+df
+
+#%% [markdown]
+# Here, NaN in last row.  The input t can be used to forecast the output value t+1
+#
+# * current time - t
+# * future times - (t+1, t+n) forcast items
+# * past observations - (t-1, t-n) used to make forecasts
+#
+# This approach helps to predict not just X -> y, also X -> Y.
