@@ -11,7 +11,8 @@ import numpy as np
 # it should be transformed to tensor-3 using Numpy.reshape
 
 #%%
-data = np.random.randint(5, size=(10,2))
+data = np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0])
+data.shape
 
 #%% [markdown]
 # call reshape and passs it a tuple of the dimensions to which to transform your data.
@@ -19,13 +20,16 @@ data = np.random.randint(5, size=(10,2))
 # In the 2-column data, let us treat the two columns as two time steps and reshape it as
 
 #%%
-data1 = data.reshape((data.shape[0], data.shape[1], 1))
+# 1 sample, 10 time steps, 1 feature
+data = data.reshape((1, 10, 1))
+data.shape
 
 #%% [markdown]
 # If you like columns in your 2D data to become features with one time step, you can reshape it as
 
 #%%
 data2 = data.reshape((data.shape[0], 1, data.shape[1]))
+data2.shape
 
 #%% [markdown]
 # You can specify the input_shape argument that expects a tuple containing the number of time steps and number of features.
@@ -38,7 +42,7 @@ from keras.layers import Activation
 
 #%%
 model = Sequential()
-model.add(LSTM(5, input_shape=(2,1)))
+model.add(LSTM(32, input_shape=(10, 1)))
 model.add(Dense(1))
 
 #%% [markdown]
@@ -66,4 +70,4 @@ algo = SGD(lr=0.1, momentum=0.3)
 model.compile(optimizer=algo, loss='mse')
 
 #%%
-model.fit(data2.shape[0], data2.shape[1], batch_size=32, epochs=100)
+model.fit(X, y, batch_size=32, epochs=100)
